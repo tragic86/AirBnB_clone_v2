@@ -13,9 +13,11 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models import classes
 
 
 class HBNBCommand(cmd.Cmd):
+
     '''
         Contains the entry point of the command interpreter.
     '''
@@ -43,12 +45,19 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            args = shlex.split(args)
-            new_instance = eval(args[0])()
+            args = shlex.split(args, posix=False)
+            new_instance = classes[args[0]]()
+            for i in args[1:]:
+                key, value = i.split("=")
+                value.replace("_", " ")
+            if '.' in value:
+                setattr(new_instance, key, float(value))
+            elif value.isdigit():
+                setattr(new_instance, key, int(value))
             new_instance.save()
             print(new_instance.id)
 
-        except:
+        except IndexError:
             print("** class doesn't exist **")
 
     def do_show(self, args):
@@ -124,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
             return
         for key, val in objects.items():
             if len(args) != 0:
-                if type(val) is eval(args):
+                if isinstance(val, eval(args)):
                     obj_list.append(val)
             else:
                 obj_list.append(val)
@@ -193,7 +202,7 @@ class HBNBCommand(cmd.Cmd):
             return
         for key, val in objects.items():
             if len(args) != 0:
-                if type(val) is eval(args):
+                if isinstance(val, eval(args)):
                     obj_list.append(val)
             else:
                 obj_list.append(val)
@@ -213,7 +222,7 @@ class HBNBCommand(cmd.Cmd):
             cmd_arg = args[0] + " " + args[2]
             func = functions[args[1]]
             func(cmd_arg)
-        except:
+        except BaseException:
             print("*** Unknown syntax:", args[0])
 
 

@@ -45,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            args = shlex.split(args, posix=False)
+            args = shlex.split(args)
             new_instance = classes[args[0]]()
             if len(args) > 1:
                 for i in args[1:]:
@@ -57,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
                         elif value.isdigit():
                             setattr(new_instance, key, int(value))
                         else:
-                            settattr(new_instance, key, str(value))
+                            setattr(new_instance, key, str(value))
             new_instance.save()
             print(new_instance.id)
 

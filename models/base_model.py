@@ -5,12 +5,19 @@
 import uuid
 from datetime import datetime
 import models
+from sqlachemy.ext.declerative import declerative_base
+from sqlalchemy import Column, Integer, String, DateTime
 
+Base = declerative_base()
 
 class BaseModel:
     '''
         Base class for other classes to be used for the duration.
     '''
+    id = Column(String(60), nullable=False, primary_key=True)
+    created_at = Column(default=datetime.utcnow(), nullable=False)
+    updated_at = Column(default=datetime.utcnow(), nullable=False)
+    
     def __init__(self, *args, **kwargs):
         '''
             Initialize public instance attributes.
@@ -60,3 +67,4 @@ class BaseModel:
         cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
 
         return (cp_dct)
+

@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 '''
-    Implementation of the State class
+    Define the class State.
 '''
 
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     '''
-        Implementation for the State.
+        Define the class State that inherits from BaseModel and Base
     '''
-    name = ""
+    __tablename__ = 'states'
+    name = Column(String(128), nullable=False)

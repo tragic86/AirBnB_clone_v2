@@ -26,7 +26,6 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            models.storage.new(self)
         else:
             kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
                                                      "%Y-%m-%dT%H:%M:%S.%f")
@@ -55,6 +54,7 @@ class BaseModel:
             Update the updated_at attribute with new.
         '''
         self.updated_at = datetime.now()
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
@@ -68,3 +68,8 @@ class BaseModel:
 
         return (cp_dct)
 
+    def delete(self):
+        '''
+            Delete the current instance from the storage 
+        '''
+        models.storage.delete(self)

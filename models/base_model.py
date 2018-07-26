@@ -5,25 +5,33 @@
 import uuid
 from datetime import datetime
 import models
+from sqlachemy.ext.declerative import declerative_base
+from sqlalchemy import Column, Integer, String, DateTime
 
+Base = declerative_base()
 
 class BaseModel:
     '''
         Base class for other classes to be used for the duration.
     '''
+    id = Column(String(60), nullable=False, primary_key=True)
+    created_at = Column(default=datetime.utcnow(), nullable=False)
+    updated_at = Column(default=datetime.utcnow(), nullable=False)
+    
     def __init__(self, *args, **kwargs):
         '''
             Initialize public instance attributes.
         '''
-        if (len(kwargs) == 0):
+        if (len(kwargs == 0):
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            models.storage.new(self)
         else:
-            kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
+            if 'created_at' in kwargs: 
+                kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
                                                      "%Y-%m-%dT%H:%M:%S.%f")
-            kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
+            if 'updated_at' in kwargs:
+                kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
                                                      "%Y-%m-%dT%H:%M:%S.%f")
             for key, val in kwargs.items():
                 if "__class__" not in key:
@@ -48,6 +56,7 @@ class BaseModel:
             Update the updated_at attribute with new.
         '''
         self.updated_at = datetime.now()
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
@@ -59,4 +68,12 @@ class BaseModel:
         cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
         cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
 
+        if '_sa_instance_state' in cp_dct:
+            cp_dct.pop('_sa_instance_state', None)
         return (cp_dct)
+
+    def delete(self):
+        '''
+            Delete the current instance from the storage 
+        '''
+        models.storage.delete(self)

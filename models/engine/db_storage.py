@@ -51,9 +51,10 @@ class DBStorage:
 
         else:
             others = [User, State, City, Amenity, Place, Review]
-            for j in self.__session.query(cls).all()
-            key = str(j.__class__.__name__) + "." + str(j.id)
-            newkey[key] = j
+            for j in others:
+                for j in self.__session.query(others).all():
+                    key = str(j.__class__.__name__) + "." + str(j.id)
+                    newkey[key] = j
         return newkey
 
     def new(self, obj):

@@ -11,7 +11,7 @@ class User(BaseModel):
         Definition of the User class
     '''
 
- __tablename__ = 'users'
+    __tablename__ = 'users'
  
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
@@ -23,7 +23,3 @@ class User(BaseModel):
         password = ""
         first_name = ""
         last_name = ""
-
-
-
- 

@@ -58,9 +58,10 @@ class FileStorage:
         ''' 
             Delete objects
         '''
-        d = dict(FileStorage.__objects)
+        d = FileStorage.__objects
 
         for key, value in d.items():
             if value == obj:
-                del(FileStorage.__objects[key])
+                del FileStorage.__objects[key]
             self.save()
+            return

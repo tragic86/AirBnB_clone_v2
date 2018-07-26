@@ -39,9 +39,6 @@ class DBStorage:
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
-        session_factory = sessionmaker(self.__engine)
-        self.__session = session_factory()
-
     def all(self, cls=None):
         """ Returns objects in dictionary format
             depending on the class name, if given.

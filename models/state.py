@@ -14,12 +14,12 @@ class State(BaseModel, Base):
     '''
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
-    places = relationship("City", cascade="all, delete-orphan", backref="state")
+    cities = relationship("City", backref="state", cascade="all, delete-orphan")
 
     @property
     def cities(self):
         """getter"""
         getit = models.storage.all("City")
-        for i in getit:
-            if i.state_id == self.id:
-                return i
+        for obj in getit:
+            if obj.state_id == self.id:
+                return obj

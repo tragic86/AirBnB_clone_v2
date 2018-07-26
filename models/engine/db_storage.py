@@ -8,7 +8,7 @@ from models.city import City
 from models.state import State
 from models.place import Place
 from models.amenity import Amenity
-
+from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy import MetaData
 from sqlalchemy import create_engine

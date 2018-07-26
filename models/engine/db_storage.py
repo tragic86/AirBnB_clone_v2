@@ -50,12 +50,12 @@ class DBStorage:
                 key = str(obj.__class__.__name__) + "." + str(obj.id)
                 list_obj[key] = obj
         else:
-            others = [User, State, City, Amenity, Place, Review]
+            others = [State, City]
             for name in others:
-                for name in self.__session.query(others).all():
-                    key = str(name.__class__.__name__) + "." + str(name.id)
-                    list_obj[key] = name
-        return newkey
+                for obj in self.__session.query(name).all():
+                    key = str(obj.__class__.__name__) + "." + str(obj.id)
+                    list_obj[key] = obj
+        return list_obj
 
     def new(self, obj):
         """add to session"""

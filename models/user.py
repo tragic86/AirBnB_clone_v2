@@ -6,7 +6,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
 
-class User(BaseModel):
+class User(BaseModel, Base):
     '''
         Definition of the User class
     '''

@@ -42,19 +42,22 @@ class DBStorage:
         self.__session = session_factory()
 
     def all(self, cls=None):
-        """get all"""
-        newkey = {}
+        """ Returns objects in dictionary format
+            depending on the class name, if given.
+            Otherwise, returns all objects in database
+        """
+        list_obj = {}
         if cls:
-            for i in self.__session.query(cls).all()
-            key = str(i.__class__.__name__) + "." + str(i.id)
-            newkey[key] = i
+            for obj in self.__session.query(cls).all()
+            key = str(obj.__class__.__name__) + "." + str(obj.id)
+            list_obj[key] = obj
 
         else:
             others = [User, State, City, Amenity, Place, Review]
-            for j in others:
-                for j in self.__session.query(others).all():
-                    key = str(j.__class__.__name__) + "." + str(j.id)
-                    newkey[key] = j
+            for name in others:
+                for name in self.__session.query(others).all():
+                    key = str(name.__class__.__name__) + "." + str(name.id)
+                    list_obj[key] = name
         return newkey
 
     def new(self, obj):

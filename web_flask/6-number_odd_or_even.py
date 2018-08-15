@@ -37,6 +37,11 @@ def numbers(n):
 
 @app.route('/number_template/<int:n>')
 def MT_ornot(n):
+    return render_template('5-number.html', num=n)
+
+
+@app.route('/number_odd_or_even/<int:n>')
+def print_oddeven(n):
     return render_template('6-number_odd_or_even.html', num=n)
 
 

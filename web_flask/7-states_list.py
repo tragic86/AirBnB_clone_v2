@@ -20,3 +20,6 @@ def s_list():
 @app.teardown_appcontext
 def tearitdown():
     storage.close()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

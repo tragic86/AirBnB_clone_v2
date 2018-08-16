@@ -18,7 +18,7 @@ def s_list():
 
 
 @app.teardown_appcontext
-def tearitdown():
+def teardown(exception):
     storage.close()
 
 if __name__ == '__main__':
